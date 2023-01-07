@@ -2,8 +2,6 @@ import React, {useState} from 'react'
 import {useQuery, UseQueryResult} from 'react-query';
 import styled from 'styled-components';
 
-
-
 const Images:React.FC = ()=>{
 const [inputValue, setInputValue] = useState<string | undefined>();
 
@@ -20,18 +18,18 @@ const { data, isLoading, error }:UseQueryResult<any[], Error> = useQuery<any[], 
 });
 
 async function fetchImages(value:any):Promise<any[]>{
-	console.log("second" ,value)
+	console.log("value",value)
 	const response = await openai.createImage({
 		prompt: value,
 		n: 2,
 		size: "1024x1024",
 		});
+		console.log("data",response.data.data)
 		return response.data.data
 }
 
 
 const handleSearch = (value:string | undefined)=>{
-	console.log("first" ,value)
 	fetchImages(value)
 }
 
@@ -49,9 +47,9 @@ return (
 		}>Search</button>
 </FormSearchbar>
 	<div>
-		{/* {data?.map((image:any, index: number) => (
+		{data?.map((image:any, index: number) => (
 			<img key={index} src={image.url} alt="genimage"/>
-		))} */}
+		))}
 	</div>
 	</>
 )
